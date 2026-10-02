@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+
+{% block title %}Mathias Filipe - Lista de Presentes{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-5 py-8 space-y-10">
+
+    <!-- HERO SECTION -->
+    <section class="bg-[#ffffff] rounded-xl p-6 sm:p-10 shadow-cloud border border-[#e4e2dd]/60 flex flex-col md:flex-row items-center gap-8 overflow-hidden relative">
+        <div class="space-y-4 md:w-1/2 z-10">
+            <span class="inline-block px-3.5 py-1.5 rounded-full bg-[#f7f2ed] text-[#7d562d] text-xs font-semibold uppercase tracking-wider font-sans">
+                Chá de Bebê & Baby Shower
+            </span>
+            <h1 class="font-serif text-3xl sm:text-4xl text-[#1b1c19] font-semibold leading-tight">
+                Seja bem-vindo à nossa Lista de Presentes!
+            </h1>
+            <p class="font-sans text-stone-600 text-sm sm:text-base leading-relaxed">
+                Preparamos cada detalhe com muito amor para a chegada do nosso bebê. Sua presença e seu carinho são os nossos maiores presentes!
+            </p>
+            <div class="pt-2 flex items-center gap-4 text-xs font-sans text-stone-500">
+                <span class="flex items-center gap-1.5 font-medium text-[#475949]">
+                    <svg class="w-4 h-4 text-[#475949]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    Pix Seguro e Direto
+                </span>
+                <span>•</span>
+                <span class="font-medium text-[#7d562d]">
+                    {{ total_presenteados }} de {{ total_itens }} presentes garantidos
+                </span>
+            </div>
+        </div>
+        <div class="md:w-1/2 w-full relative">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden shadow-cloud border border-[#e4e2dd]/40">
+                <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1000&q=80" 
+                     alt="Chá de Bebê Hero" 
+                     class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER EXPLICATIVO PIX -->
+    <div class="bg-[#f7f2ed] rounded-xl p-5 border border-[#7d562d]/20 flex items-center gap-4 shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#7d562d] text-white flex-shrink-0 flex items-center justify-center font-bold text-lg">
+            ⚡
+        </div>
+        <div class="text-sm">
+            <p class="font-serif font-semibold text-[#7d562d]">Como funcionam os presentes virtuais?</p>
+            <p class="font-sans text-stone-600 text-xs sm:text-sm mt-0.5">
+                Escolha o presente, preencha seu nome e mensagem de carinho. Ao clicar em <strong>Presentear</strong>, um código QR Code Pix será gerado instantaneamente para você realizar o pagamento com facilidade!
+            </p>
+        </div>
+    </div>
+
+    <!-- FILTROS EM FORMATO DE PÍLULA -->
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <h2 class="font-serif text-2xl text-[#1b1c19] font-semibold">Escolha o seu Presente</h2>
+            <span class="text-xs text-stone-500 font-sans">Mostrando {{ itens|length }} itens</span>
+        </div>
+
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+            <!-- Pílula Todas -->
+            <a href="{{ url_for('index', categoria='todas') }}" 
+               class="px-5 py-2.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap font-sans border {% if categoria_ativa == 'todas' %}bg-[#475949] text-white border-[#475949] shadow-cloud{% else %}bg-[#f5f3ee] text-[#475949] border-[#e4e2dd] hover:bg-[#475949]/10{% endif %}">
+               ✨ Todos os itens
+            </a>
+            {% for cat in categorias %}
+            <a href="{{ url_for('index', categoria=cat) }}" 
+               class="px-5 py-2.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap font-sans border {% if categoria_ativa == cat %}bg-[#475949] text-white border-[#475949] shadow-cloud{% else %}bg-[#f5f3ee] text-[#475949] border-[#e4e2dd] hover:bg-[#475949]/10{% endif %}">
+               {{ cat }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- GRADE DE PRODUTOS (MOBILE-FIRST: 1 COLUNA BASE, 2/3 EM TELAS MAIORES) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for item in itens %}
+        <div class="bg-[#ffffff] rounded-xl border border-[#e4e2dd]/70 overflow-hidden shadow-cloud flex flex-col justify-between group hover:shadow-cloud-lg transition-all duration-300">
+            
+            <div class="p-4 space-y-3">
+                <!-- Conteiner da Imagem Arredondada (rounded-xl) -->
+                <div class="relative aspect-[4/3] rounded-xl overflow-hidden bg-stone-100 border border-[#e4e2dd]/40">
+                    <img src="{{ item.imagem_url }}" 
+                         alt="{{ item.nome }}" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 {% if item.status == 'presenteado' %}opacity-50 grayscale-[30%]{% endif %}">
+
+                    <!-- Badges sobrepostos -->
+                    <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                        {% if item.destaque and item.status == 'disponivel' %}
+                        <span class="bg-[#7d562d] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm font-sans">
+                            Item Indispensável
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    {% if item.status == 'presenteado' %}
+                    <div class="absolute inset-0 bg-[#1b1c19]/20 flex items-center justify-center p-2">
+                        <span class="bg-[#ffffff]/95 text-[#7d562d] text-xs font-bold px-3.5 py-1.5 rounded-full shadow-cloud flex items-center gap-1 font-sans">
+                            Já presenteado! ❤️
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Informações do Produto -->
+                <div class="space-y-1.5">
+                    <span class="label-caps block text-[11px] font-bold tracking-wider text-[#7d562d]">
+                        {{ item.categoria }}
+                    </span>
+                    <h3 class="font-serif text-lg font-semibold text-[#1b1c19] leading-snug group-hover:text-[#475949] transition-colors">
+                        {{ item.nome }}
+                    </h3>
+
+                    <!-- BARRA DE PROGRESSO DA VAQUINHA / COTAS -->
+                    <div class="pt-2 space-y-1.5">
+                        <div class="flex justify-between items-center text-xs font-sans">
+                            <span class="text-stone-500 font-medium">Arrecadado: <strong class="text-[#475949]">R$ {{ "%.2f"|format(item.total_arrecadado)|replace('.', ',') }}</strong></span>
+                            <span class="font-bold text-[#7d562d] text-xs bg-[#f7f2ed] px-2 py-0.5 rounded-md border border-[#7d562d]/20">{{ item.porcentagem }}%</span>
+                        </div>
+                        <div class="w-full bg-[#f2eee9] rounded-full h-2.5 overflow-hidden border border-[#e4e2dd]/80 shadow-inner">
+                            <div class="bg-gradient-to-r from-[#7d562d] to-[#475949] h-full rounded-full transition-all duration-500" style="width: {{ item.porcentagem }}%"></div>
+                        </div>
+                        {% if item.status == 'disponivel' and item.total_arrecadado > 0 %}
+                        <p class="text-[11px] text-[#475949] font-semibold">Falta R$ {{ "%.2f"|format(item.valor_restante)|replace('.', ',') }} para completar!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rodapé do Card com Preço e Botão de Ação -->
+            <div class="p-4 pt-0 flex items-center justify-between gap-3 border-t border-stone-100 mt-2">
+                <div>
+                    <span class="text-[10px] text-stone-400 font-sans block uppercase font-medium">Meta Total</span>
+                    <span class="font-sans font-bold text-base text-[#475949]">
+                        R$ {{ "%.2f"|format(item.valor)|replace('.', ',') }}
+                    </span>
+                </div>
+
+                {% if item.status == 'disponivel' %}
+                <button onclick="abrirModalCheckout('{{ item.id }}', '{{ item.nome|replace("'", "\\'") }}', '{{ item.valor }}', '{{ item.valor_restante }}', '{{ item.imagem_url }}')"
+                        class="bg-[#475949] hover:bg-[#38473a] text-white text-sm font-medium py-2.5 px-5 rounded-lg transition-all shadow-cloud active:scale-95 flex items-center gap-2 font-sans">
+                    <span>Presentear</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+                {% else %}
+                <button disabled 
+                        class="bg-stone-100 text-stone-400 text-sm font-medium py-2.5 px-5 rounded-lg cursor-not-allowed font-sans flex items-center gap-1">
+                    <span>Agradecemos!</span>
+                    <span>❤️</span>
+                </button>
+                {% endif %}
+            </div>
+
+        </div>
+        {% else %}
+        <div class="col-span-full py-12 text-center bg-white rounded-xl border border-[#e4e2dd]">
+            <p class="font-serif text-stone-500">Nenhum item encontrado nesta categoria.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- MODAL DE CHECKOUT (GAVETA DE PAGAMENTO PIX) -->
+<div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden transition-opacity duration-300">
+    <div class="bg-[#ffffff] rounded-xl max-w-lg w-full overflow-hidden shadow-cloud-lg border border-[#e4e2dd] transform transition-transform duration-300 scale-95" id="modal-container">
+        
+        <!-- Cabeçalho do Modal -->
+        <div class="bg-[#fbf9f4] p-5 border-b border-[#e4e2dd] flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">🎁</span>
+                <h3 class="font-serif text-lg font-semibold text-[#1b1c19]">Presentear o Bebê</h3>
+            </div>
+            <button onclick="fecharModalCheckout()" class="text-stone-400 hover:text-stone-700 p-1 rounded-lg transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <!-- Conteúdo do Modal -->
+        <div class="p-6 space-y-6 max-h-[85vh] overflow-y-auto">
+            
+            <!-- Resumo do Produto Selecionado -->
+            <div class="flex items-center gap-4 p-3 bg-[#f7f2ed] rounded-lg border border-[#7d562d]/10">
+                <img id="modal-item-img" src="" alt="Produto" class="w-16 h-16 object-cover rounded-lg border border-stone-200">
+                <div class="flex-grow">
+                    <span class="label-caps block text-[10px]">Item Selecionado</span>
+                    <h4 id="modal-item-nome" class="font-serif font-semibold text-[#1b1c19] text-base leading-tight">Nome do Produto</h4>
+                    <div class="flex items-center gap-3 mt-1 text-xs">
+                        <span id="modal-item-valor" class="font-sans font-bold text-stone-600 block">Meta: R$ 0,00</span>
+                        <span id="modal-item-restante" class="font-sans font-bold text-[#475949] block bg-[#475949]/10 px-2 py-0.5 rounded-md">Falta R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSO 1: FORMULÁRIO DE DADOS DO CONVIDADO -->
+            <div id="step-form" class="space-y-4">
+                <!-- Seletor de Cotas / Valor da Contribuição -->
+                <div class="bg-[#fbf9f4] p-3.5 rounded-xl border border-[#e4e2dd] space-y-2.5">
+                    <label class="label-caps block text-stone-700 font-bold">Quanto você deseja contribuir? *</label>
+                    
+                    <!-- Botões Rápidos de Cotas -->
+                    <div id="container-cotas-rapidas" class="flex flex-wrap gap-2">
+                        <!-- Gerado dinamicamente via JS -->
+                    </div>
+
+                    <!-- Input Personalizado de Valor -->
+                    <div class="pt-1 flex items-center gap-2">
+                        <span class="text-xs font-semibold text-stone-500 font-sans">Ou digite outro valor: R$</span>
+                        <input type="number" id="input-valor-contribuicao" step="0.01" min="1.00" oninput="aoAlterarInputValor(this)"
+                               class="w-32 input-custom text-sm font-bold font-sans py-1.5 focus:ring-2 focus:ring-[#475949]">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="label-caps block mb-1.5 text-stone-600">Seu Nome *</label>
+                    <input type="text" id="input-nome-convidado" placeholder="Ex: Tia Maria e Tio João" 
+                           class="w-full input-custom focus:ring-2 focus:ring-[#475949]">
+                </div>
+
+                <div>
+                    <label class="label-caps block mb-1.5 text-stone-600">Deixe uma mensagem de carinho</label>
+                    <textarea id="input-mensagem" rows="3" placeholder="Escreva aqui uma mensagem carinhosa para os pais e para o bebê..." 
+                              class="w-full input-custom focus:ring-2 focus:ring-[#475949] resize-none"></textarea>
+                </div>
+
+                <div id="checkout-error" class="hidden text-xs text-red-600 font-medium p-2.5 bg-red-50 rounded-lg border border-red-200"></div>
+
+                <button id="btn-gerar-pix" onclick="gerarPixCheckout()" 
+                        class="w-full bg-[#475949] hover:bg-[#38473a] text-white font-sans font-semibold py-3.5 px-6 rounded-lg transition-all shadow-cloud flex items-center justify-center gap-2">
+                    <span>Gerar Pix de R$ <span id="btn-valor-texto">0,00</span></span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+
+            <!-- PASSO 2: EXIBIÇÃO DO QR CODE PIX E COPIA E COLA -->
+            <div id="step-pix" class="hidden space-y-5 text-center">
+                <div class="bg-[#fbf9f4] p-4 rounded-xl border border-[#e4e2dd] inline-block shadow-inner mx-auto">
+                    <img id="pix-qr-img" src="" alt="QR Code Pix" class="w-48 h-48 mx-auto rounded-lg">
+                </div>
+
+                <div class="space-y-2">
+                    <p class="text-xs text-stone-600 font-sans">
+                        Abra o app do seu banco, escolha <strong>Pix</strong> e escaneie a imagem acima ou copie o código abaixo:
+                    </p>
+                    
+                    <div class="relative">
+                        <textarea id="pix-copia-cola" readonly rows="2" 
+                                  class="w-full text-xs font-mono bg-stone-50 border border-[#e4e2dd] rounded-lg p-2.5 text-stone-700 resize-none select-all focus:outline-none"></textarea>
+                    </div>
+
+                    <button onclick="copiarPixPayload()" 
+                            class="w-full bg-[#7d562d] hover:bg-[#684724] text-white font-sans font-semibold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2 text-sm shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                        <span>Pix Copia e Cola</span>
+                    </button>
+                </div>
+
+                <!-- Botão de simulação/confirmação para teste ou produção -->
+                <div class="pt-3 border-t border-stone-200 space-y-2">
+                    <button id="btn-simular-pagamento" onclick="simularPagamentoAprovado()" 
+                            class="w-full bg-[#475949] hover:bg-[#38473a] text-white font-sans font-semibold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2 text-sm shadow-cloud">
+                        <span>Já realizei o pagamento</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </button>
+                    <p class="text-[11px] text-stone-400 font-sans">Ao confirmar, você será redirecionado para a tela de recibo.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

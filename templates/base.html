@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mathias Filipe - Chá de Bebê Virtual{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        offwhite: '#fbf9f4',
+                        sage: {
+                            DEFAULT: '#475949',
+                            dark: '#38473a',
+                            light: '#eaf0eb'
+                        },
+                        terracotta: {
+                            DEFAULT: '#7d562d',
+                            light: '#f7f2ed'
+                        },
+                        charcoal: '#1b1c19'
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'xl': '1.5rem', /* 24px */
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Estilos Customizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body class="bg-[#fbf9f4] text-[#1b1c19] min-h-full flex flex-col antialiased selection:bg-[#475949] selection:text-white">
+
+    <!-- Header / Navbar Minimalista -->
+    <header class="sticky top-0 z-30 bg-[#fbf9f4]/90 backdrop-blur-md border-b border-[#e4e2dd]/60 transition-all">
+        <div class="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between">
+            <!-- Logo / Nome da Lista -->
+            <a href="{{ url_for('index') }}" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-[#475949] text-white flex items-center justify-between justify-center font-serif text-lg font-bold shadow-cloud group-hover:scale-105 transition-transform">
+                    👶
+                </div>
+                <div>
+                    <span class="font-serif text-xl font-semibold tracking-tight text-[#1b1c19] block leading-tight">Mathias Filipe</span>
+                    <span class="text-xs text-[#7d562d] font-sans font-medium tracking-wide">Lista de Presentes Virtual</span>
+                </div>
+            </a>
+
+            <!-- Links de Navegação -->
+            <nav class="flex items-center gap-2 sm:gap-4">
+                <a href="{{ url_for('index') }}" 
+                   class="px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-sm font-medium transition-colors font-sans text-center {% if request.path == '/' %}bg-[#475949] text-white shadow-cloud{% else %}text-[#1b1c19] hover:bg-[#475949]/10{% endif %}">
+                   🎁 Presentes
+                </a>
+                <a href="{{ url_for('mural') }}" 
+                   class="px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-sm font-medium transition-colors font-sans text-center {% if request.path == '/mural' %}bg-[#475949] text-white shadow-cloud{% else %}text-[#1b1c19] hover:bg-[#475949]/10{% endif %}">
+                   💌 Mural de Recados
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 bg-[#ffffff] border-t border-[#e4e2dd] py-10">
+        <div class="max-w-5xl mx-auto px-5 text-center">
+            <div class="w-12 h-12 mx-auto rounded-full bg-[#f7f2ed] flex items-center justify-center mb-3">
+                <span class="text-[#7d562d] text-xl">❤️</span>
+            </div>
+            <p class="font-serif text-lg text-[#1b1c19] font-medium">Obrigado por fazer parte desse momento tão especial!</p>
+            <p class="text-xs text-stone-500 font-sans mt-2">Bebê Registry &copy; 2026 • Receba seus presentes via Pix com carinho e praticidade.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
+        <div id="toast-message" class="bg-[#475949] text-white px-6 py-3 rounded-lg shadow-cloud-lg text-sm font-medium flex items-center gap-2">
+            <span>✨</span> <span id="toast-text">Notificação</span>
+        </div>
+    </div>
+
+    <!-- Script Principal JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

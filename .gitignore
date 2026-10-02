@@ -1,0 +1,38 @@
+# Byte-compiled / Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments & Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secret Credentials
+.env
+.env.local
+.env.*.local
+
+# SQLite Databases & Local Data
+*.db
+*.sqlite3
+bebe_registry.db
+
+# IDEs & System Files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Testing, Coverage & Logs
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+

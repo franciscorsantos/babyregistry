@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400&display=swap');
+
+:root {
+    --bg-offwhite: #fbf9f4;
+    --primary-sage: #475949;
+    --secondary-terracotta: #7d562d;
+    --text-charcoal: #1b1c19;
+    --border-subtle: #e4e2dd;
+    --card-bg-light: #ffffff;
+    --card-bg-warm: #f5f3ee;
+}
+
+body {
+    background-color: var(--bg-offwhite);
+    color: var(--text-charcoal);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Tipografia Literata para Títulos */
+h1, h2, h3, h4, .font-literata, .font-serif {
+    font-family: 'Literata', serif;
+}
+
+/* Label Caps conforme guia de UI */
+.label-caps {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--secondary-terracotta);
+}
+
+/* Sombra de Nuvem */
+.shadow-cloud {
+    box-shadow: 0 20px 40px -15px rgba(71, 89, 73, 0.08);
+}
+
+.shadow-cloud-lg {
+    box-shadow: 0 25px 50px -12px rgba(71, 89, 73, 0.12);
+}
+
+/* Inputs estilizados conforme diretrizes */
+.input-custom {
+    background-color: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.5rem; /* 8px */
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-charcoal);
+    transition: all 0.2s ease-in-out;
+}
+
+.input-custom:focus {
+    outline: none;
+    border-color: var(--primary-sage);
+    box-shadow: 0 0 0 3px rgba(71, 89, 73, 0.15);
+}
+
+/* Transições de Modal */
+.modal-backdrop {
+    background-color: rgba(27, 28, 25, 0.4);
+    backdrop-filter: blur(4px);
+}
