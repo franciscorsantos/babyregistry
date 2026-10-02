@@ -36,7 +36,7 @@
         <!-- Detalhes do Item Presenteado -->
         <div class="flex items-center gap-4 pb-4 border-b border-stone-100">
             {% if presente.item %}
-            <img src="{{ presente.item.imagem_url }}" alt="{{ presente.item.nome }}" class="w-16 h-16 object-cover rounded-xl border border-stone-200">
+            <img src="{{ presente.item.imagem_url }}" alt="{{ presente.item.nome }}" class="w-16 h-16 object-contain bg-white p-1 rounded-xl border border-stone-200">
             <div>
                 <span class="label-caps text-[10px]">{{ presente.item.categoria }}</span>
                 <h3 class="font-serif font-semibold text-[#1b1c19] text-base">{{ presente.item.nome }}</h3>

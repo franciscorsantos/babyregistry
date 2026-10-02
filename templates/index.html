@@ -29,10 +29,10 @@
             </div>
         </div>
         <div class="md:w-1/2 w-full relative">
-            <div class="aspect-[4/3] rounded-xl overflow-hidden shadow-cloud border border-[#e4e2dd]/40">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden shadow-cloud border border-[#e4e2dd]/40 bg-[#fbf9f4] flex items-center justify-center p-2">
                 <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1000&q=80" 
                      alt="Chá de Bebê Hero" 
-                     class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                     class="w-full h-full object-contain transform hover:scale-105 transition-transform duration-700">
             </div>
         </div>
     </section>
@@ -79,10 +79,10 @@
             
             <div class="p-4 space-y-3">
                 <!-- Conteiner da Imagem Arredondada (rounded-xl) -->
-                <div class="relative aspect-[4/3] rounded-xl overflow-hidden bg-stone-100 border border-[#e4e2dd]/40">
+                <div class="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#ffffff] border border-[#e4e2dd]/40 flex items-center justify-center p-2">
                     <img src="{{ item.imagem_url }}" 
                          alt="{{ item.nome }}" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 {% if item.status == 'presenteado' %}opacity-50 grayscale-[30%]{% endif %}">
+                         class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 {% if item.status == 'presenteado' %}opacity-50 grayscale-[30%]{% endif %}">
 
                     <!-- Badges sobrepostos -->
                     <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
@@ -180,7 +180,7 @@
             
             <!-- Resumo do Produto Selecionado -->
             <div class="flex items-center gap-4 p-3 bg-[#f7f2ed] rounded-lg border border-[#7d562d]/10">
-                <img id="modal-item-img" src="" alt="Produto" class="w-16 h-16 object-cover rounded-lg border border-stone-200">
+                <img id="modal-item-img" src="" alt="Produto" class="w-16 h-16 object-contain bg-white p-1 rounded-lg border border-stone-200">
                 <div class="flex-grow">
                     <span class="label-caps block text-[10px]">Item Selecionado</span>
                     <h4 id="modal-item-nome" class="font-serif font-semibold text-[#1b1c19] text-base leading-tight">Nome do Produto</h4>
